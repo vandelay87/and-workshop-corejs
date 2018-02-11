@@ -1,24 +1,27 @@
-/* 
-	
+/*
+
 	Task 1) Refactor the following traditional Javascript "class" into new class syntax
 
 */
 
-function Animal() {}
+class Animal{
+  constructor(say) {
+    this.say = say;
+  }
 
-Animal.prototype.speak = function() {
-  return 'meow';
-};
+  speak() {
+    return 'meow';
+  }
 
-Animal.eat = function() {
-  return 'nom nom nom';
-};
+  eat(){
+    return this.say;
+  }
+}
 
 test('Make cat meow', () => {
-  const Cat = new Animal();
-
+  var Cat = new Animal('nom nom nom');
   expect(Cat.speak()).toBe('meow');
-  expect(Animal.eat()).toBe('nom nom nom');
+  expect(Cat.eat()).toBe('nom nom nom');
 });
 
 /*
@@ -30,7 +33,13 @@ test('Make cat meow', () => {
 */
 
 test('Hear the kitten meow', () => {
-  const Kitty = new Kitten();
+  class Kitten extends Animal{
+    speak(){
+      super.speak();
+      return 'kitten ' + super.speak();
+    }
+  }
 
+  const Kitty = new Kitten();
   expect(Kitty.speak()).toBe('kitten meow');
 });
